@@ -1,2 +1,1 @@
-# Music-Player
-Music player using python
+A `Music Player` application that allows you to listen to music files stored in the phone's internal or external memory.
