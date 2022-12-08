@@ -16,6 +16,10 @@ songIndex = 0
 
 
 def setPath():
+    '''
+    opens pathFile.txt in write mode and stores the path of
+    the folder in which all the mp3 files present.
+    '''
     path = filedialog.askdirectory()
     with open("pathFile.txt", "w") as pathFile:
         pathFile.write(path)
@@ -23,6 +27,9 @@ def setPath():
 
 
 def changePath(e):
+    '''
+    Changes the folder path in which all the mp3 files are present.
+    '''
     global path
     global songs
     path = setPath()
@@ -32,6 +39,10 @@ def changePath(e):
 
 
 def loadSong(path):
+    '''
+    Loads all the mp3 files present in a folder and displays meta data
+    into the GUI
+    '''
     audio = stagger.read_tag(path)
     name.config(text=audio.title)
     album.config(text=audio.album)
@@ -42,6 +53,9 @@ def loadSong(path):
 
 
 def prevSong():
+    '''
+    Plays the previous song
+    '''
     global songIndex
     songIndex = (songIndex - 1 + len(songs)) % len(songs)
     loadSong(songs[songIndex])
@@ -50,6 +64,9 @@ def prevSong():
 
 
 def nextSong():
+    '''
+    Plays the next song
+    '''
     global songIndex
     songIndex = (songIndex + 1) % len(songs)
     loadSong(songs[songIndex])
@@ -58,6 +75,9 @@ def nextSong():
 
 
 def play_Pause():
+    '''
+    Play and pause toggler
+    '''
     if(mixer.music.get_busy()):
         mixer.music.pause()
         play_pauseBtn.config(text="Play")
@@ -112,7 +132,9 @@ except:
 
 
 def find_songs(path):
-    # write your code here
+    '''
+    Finds all the .mp3 and .wav files from a folder path and stores it in a list
+    '''
     list_of_song = list()
     for file in os.listdir(path):
         if file.endswith(".mp3") or file.endswith(".wav"):
