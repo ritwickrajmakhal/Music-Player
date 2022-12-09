@@ -1,6 +1,4 @@
 # ---------------------- Included packages -------------
-import io
-from time import sleep
 from tkinter import *
 from tkinter import filedialog
 import stagger
