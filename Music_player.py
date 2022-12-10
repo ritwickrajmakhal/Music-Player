@@ -13,6 +13,7 @@ path = ""
 songs = []
 songIndex = 0
 pos = 0.0
+volume = 0.5
 # --------------- Function definitions -----------------
 
 
@@ -59,6 +60,14 @@ def changePath(e):
     loadSong(songs[songIndex])
     play_pauseBtn.config(text="Play")
 
+def changeVolume(event):
+    global volume
+    if event.delta < 0 and volume>=0.0:
+        volume -= 0.1
+        mixer.music.set_volume(volume)
+    if event.delta > 0 and volume <= 1.0:
+        volume += 0.1
+        mixer.music.set_volume(volume)
 
 def loadSong(path):
     '''
@@ -159,6 +168,7 @@ nextBtn = tk.Button(f2, text=">>", padx=20, pady=10, command=nextSong)
 nextBtn.pack(side=tk.LEFT, padx=30)
 
 img.bind("<Button>", changePath)
+root.bind('<MouseWheel>',changeVolume)
 try:
     with open("pathFile.txt") as pathFile:
         path = pathFile.read()
