@@ -3,3 +3,5 @@
 A `Music Player` application that allows you to listen to music files stored in the computer's internal or external memory.
 
 ![Table Image](images/sc1.png)
+
+## Demo - How can you use my Music Player?
