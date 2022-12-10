@@ -14,20 +14,30 @@ songs = []
 songIndex = 0
 pos = 0.0
 volume = 0.5
+flag = True
 # --------------- Function definitions -----------------
 
 
 def setSongIndex(songIndex):
+    '''
+    Stores index of currently playing audio file.
+    '''
     with open('songIndexFile.txt', 'w') as songIndexFile:
         songIndexFile.write(str(songIndex))
 
 
 def getPos():
+    '''
+    Returns the position of music player
+    '''
     with open('posFile.txt') as posFile:
         return posFile.read()
 
 
 def setPos(pos):
+    '''
+    Sets in which position the has stopped
+    '''
     with open('posFile.txt', 'w') as posFile:
         posFile.write(str(pos))
 
@@ -60,26 +70,45 @@ def changePath(e):
     loadSong(songs[songIndex])
     play_pauseBtn.config(text="Play")
 
+
 def changeVolume(event):
+    '''
+    Increases volume when mouse wheel scrolls in forward direction and
+    decreases volume when mouse wheel scrolls in backward direction.
+    '''
     global volume
-    if event.delta < 0 and volume>=0.0:
-        volume -= 0.1
+    if event.delta < 0 and volume >= 0.0:
+        volume -= 0.05
         mixer.music.set_volume(volume)
     if event.delta > 0 and volume <= 1.0:
-        volume += 0.1
+        volume += 0.05
         mixer.music.set_volume(volume)
+
 
 def loadSong(path):
     '''
     Loads all the mp3 files present in a folder and displays meta data
     into the GUI
     '''
-    audio = stagger.read_tag(path)
-    name.config(text=audio.title)
-    album.config(text=audio.album)
-    artist.config(text=audio.artist)
-    mixer.music.load(path)
-    mixer.music.play()
+    global songIndex
+    try:
+        audio = stagger.read_tag(path)
+        name.config(text=audio.title)
+        album.config(text=audio.album)
+        artist.config(text=audio.artist)
+    except:
+        name.config(text='title unavailable')
+        album.config(text='album unavailable')
+        artist.config(text='artist unavailable')
+    try:
+        mixer.music.load(path)
+        mixer.music.play()
+    except:
+        messagebox.showerror(
+            "Invalid file", icon='error')
+        songIndex = (songIndex + 1) % len(songs)
+        setSongIndex(songIndex)
+        loadSong(songs[songIndex])
     mixer.music.pause()
 
 
@@ -111,7 +140,7 @@ def nextSong():
     mixer.music.play()
 
 
-flag = True
+
 
 
 def play_Pause():
@@ -168,7 +197,7 @@ nextBtn = tk.Button(f2, text=">>", padx=20, pady=10, command=nextSong)
 nextBtn.pack(side=tk.LEFT, padx=30)
 
 img.bind("<Button>", changePath)
-root.bind('<MouseWheel>',changeVolume)
+root.bind('<MouseWheel>', changeVolume)
 try:
     with open("pathFile.txt") as pathFile:
         path = pathFile.read()
