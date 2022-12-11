@@ -83,6 +83,9 @@ def changeVolume(event):
     if event.delta > 0 and volume <= 1.0:
         volume += 0.05
         mixer.music.set_volume(volume)
+    root.title("Volume: "+str(int(volume*10)))
+    sleep(0.5)
+    root.title("Music Player")
 
 
 def loadSong(path):
