@@ -176,7 +176,19 @@ root.title("Music Player")
 root.geometry("800x400")
 root.maxsize(800, 400)
 root.minsize(800, 400)
-f1 = tk.Frame(root, bg="black")
+
+menuBar = tk.Frame(root,bg="black")
+menuBar.pack(side=tk.TOP, fill=tk.X)
+
+btn1 = tk.Button(menuBar, text="Songs", width=10)
+btn1.pack(side=tk.LEFT, fill=tk.Y)
+btn2 = tk.Button(menuBar, text="Player", width=10)
+btn2.pack(side=tk.LEFT, fill=tk.Y)
+
+f0 = tk.Frame(root)
+f0.pack(fill=tk.X,side=tk.LEFT)
+
+f1 = tk.Frame(f0, bg="black")
 f1.pack(side=tk.LEFT, fill=tk.Y)
 
 photo = ImageTk.PhotoImage(Image.open("images/logo.jpg").resize((400, 400)))
@@ -184,7 +196,7 @@ img = tk.Label(f1, image=photo)
 img.pack(fill=tk.X)
 
 
-f2 = tk.Frame(root, bg="black")
+f2 = tk.Frame(f0, bg="black")
 f2.pack(side=tk.RIGHT, fill=tk.Y)
 
 name = tk.Label(f2, bg="black", fg="white", font=("Bahnschrift Condensed", 12))
