@@ -1,4 +1,5 @@
 # ---------------------- Included packages -------------
+import io
 from time import sleep
 import tkinter as tk
 from tkinter import messagebox
@@ -99,10 +100,19 @@ def loadSong(path):
         name.config(text=audio.title)
         album.config(text=audio.album)
         artist.config(text=audio.artist)
+        by_data = audio[stagger.id3.APIC][0].data
+        im = io.BytesIO(by_data)
+        photo = ImageTk.PhotoImage(Image.open(im).resize((400, 400)))
+        img.configure(image=photo)
+        img.image = photo
     except:
         name.config(text='title unavailable')
         album.config(text='album unavailable')
         artist.config(text='artist unavailable')
+        photo = ImageTk.PhotoImage(Image.open(
+            "images/logo.jpg").resize((400, 400)))
+        img.configure(image=photo)
+        img.image = photo
     try:
         mixer.music.load(path)
         mixer.music.play()
@@ -141,9 +151,6 @@ def nextSong():
     loadSong(songs[songIndex])
     play_pauseBtn.config(text="Pause")
     mixer.music.play()
-
-
-
 
 
 def play_Pause():
@@ -236,8 +243,11 @@ if len(songs) == 0:
         pathFile.write('')
     exit(-1)
 sleep(1)
-with open("songIndexFile.txt") as songIndexFile:
-    songIndex = int(songIndexFile.read())
+try:
+    with open("songIndexFile.txt") as songIndexFile:
+        songIndex = int(songIndexFile.read())
+except:
+    setSongIndex(0)
 loadSong(songs[songIndex])
 try:
     pos = float(getPos())

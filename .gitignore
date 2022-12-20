@@ -3,3 +3,4 @@ songs/
 __pycache__/
 *.txt
 output/
+test/
