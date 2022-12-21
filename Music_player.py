@@ -11,14 +11,13 @@ mixer.init()
 # --------------- Global variables ---------------------
 flag = True
 volume = 0.5
-songIndex = 0
 # --------------- Function definitions -----------------
-
-
 def changePath(e):
-    '''
-    Changes the folder path in which all the mp3 files are present.
-    '''
+    """Changes the folder path in which all the mp3 files are present.
+
+    Args:
+        e (event): event variable for mouse click
+    """
     global pos
     pos = 0.0
     setPos(0.0)
@@ -29,10 +28,12 @@ def changePath(e):
 
 
 def changeVolume(event):
-    '''
-    Increases volume when mouse wheel scrolls in forward direction and
+    """Increases volume when mouse wheel scrolls in forward direction and
     decreases volume when mouse wheel scrolls in backward direction.
-    '''
+
+    Args:
+        event (event): event variable for mouse wheel
+    """
     global volume
     if event.delta < 0 and volume >= 0.0:
         volume -= 0.05
@@ -44,12 +45,13 @@ def changeVolume(event):
     sleep(0.5)
     root.title("Music Player")
 
-
 def loadSong(path):
-    '''
-    Loads all the mp3 files present in a folder and displays meta data
+    """Loads a mp3 files present in the path and displays meta data
     into the GUI
-    '''
+
+    Args:
+        path (Str): exact path of a mp3 file
+    """
     global songIndex
     try:
         audio = stagger.read_tag(path)
@@ -81,9 +83,8 @@ def loadSong(path):
 
 
 def prevSong():
-    '''
-    Plays the previous song
-    '''
+    """Plays the previous song
+    """
     global songIndex
     global pos
     songIndex = (songIndex - 1 + len(songs)) % len(songs)
@@ -94,9 +95,8 @@ def prevSong():
 
 
 def nextSong():
-    '''
-    Plays the next song
-    '''
+    """Plays the next song
+    """
     global songIndex
     global pos
     songIndex = (songIndex + 1) % len(songs)
@@ -107,9 +107,8 @@ def nextSong():
 
 
 def play_Pause():
-    '''
-    Play and pause toggler
-    '''
+    """Play and pause toggler
+    """
     global flag
     if(mixer.music.get_busy()):
         mixer.music.pause()
@@ -128,7 +127,7 @@ root.title("Music Player")
 root.geometry("800x410")
 root.maxsize(800, 410)
 root.minsize(800, 410)
-
+# ------------------------ Design statements for menu bar ------------------
 menuBar = tk.Frame(root, bg="black")
 menuBar.pack(side=tk.TOP, fill=tk.X)
 
@@ -147,7 +146,7 @@ photo = ImageTk.PhotoImage(Image.open(
     "resources\images\defaultImage.jpg").resize((400, 400)))
 img = tk.Label(f1, image=photo)
 img.pack(fill=tk.X)
-
+img.bind("<Button>", changePath)
 
 f2 = tk.Frame(f0, bg="black")
 f2.pack(side=tk.RIGHT, fill=tk.Y)
@@ -171,9 +170,9 @@ play_pauseBtn.pack(side=tk.LEFT, padx=30)
 tk.Button(f2, text=">>", padx=20, pady=10,
           command=nextSong).pack(side=tk.LEFT, padx=30)
 
-img.bind("<Button>", changePath)
-root.bind('<MouseWheel>', changeVolume)
 
+root.bind('<MouseWheel>', changeVolume)
+# ---------------------- Entry Point ------------------
 path = askForPath()
 songs = find_songs(path)
 isContainsAudioFile(songs)
