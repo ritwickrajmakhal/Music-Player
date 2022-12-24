@@ -36,7 +36,7 @@ Note: If there are any other types of package installation needed install then t
 ### 3. Demonstration
 
 - After successfully running this application, you will see look this:
-![Screenshot](demo-related-assests/sc1.gif)
+![Screenshot](demo-related-assests/sc1.png)
 
 - Don't skip the pop up, it will appear only for the first time user. In this pop up you will need to choose a folder which contains at least one `.mp3` or `.wav` file.
 
