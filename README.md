@@ -2,7 +2,7 @@
 
 A `Music Player` application that allows you to listen to musics that stored in the computer's internal or external memory..
 
-![Table Image] (images/sc1.png)
+![Table Image] (demo-related-assests/sc1.png)
 
 ## Demo - How you can use my Music Player?
 
@@ -36,7 +36,7 @@ Note: If there are any other types of package installation needed install then t
 ### 3. Demonstration
 
 - After successfully running this application, you will see look this:
-![Screenshot](demo-related-assests/sc1.png)
+![Screenshot](demo-related-assests/sc1.gif)
 
 - Don't skip the pop up, it will appear only for the first time user. In this pop up you will need to choose a folder which contains at least one `.mp3` or `.wav` file.
 
