@@ -9,7 +9,6 @@ from pygame import mixer
 from PIL import Image, ImageTk
 mixer.init()
 # --------------- Global variables ---------------------
-flag = True
 volume = 0.5
 # --------------- Function definitions -----------------
 def changePath(e):
@@ -73,7 +72,7 @@ def loadSong(path):
         img.image = photo
     try:
         mixer.music.load(path)
-        mixer.music.play()
+        mixer.music.play(start=pos)
     except:
         messagebox.showerror(
             "Invalid file", icon='error')
@@ -109,14 +108,10 @@ def nextSong():
 def play_Pause():
     """Play and pause toggler
     """
-    global flag
     if(mixer.music.get_busy()):
         mixer.music.pause()
         play_pauseBtn.config(text="Play")
     else:
-        if flag:
-            mixer.music.set_pos(pos)
-            flag = False
         play_pauseBtn.config(text="Pause")
         mixer.music.unpause()
 

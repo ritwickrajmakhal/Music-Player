@@ -2,7 +2,7 @@
 
 A `Music Player` application that allows you to listen to musics that stored in the computer's internal or external memory..
 
-![Table Image] (demo-related-assests/sc1.png)
+![Table Image](demo-related-assests/sc1.png)
 
 ## Demo - How you can use my Music Player?
 
