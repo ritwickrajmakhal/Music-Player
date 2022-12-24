@@ -11,19 +11,19 @@ A `Music Player` application that allows you to listen to musics that stored in 
 
 - <a target="_blank" href="https://docs.python.org/3/library/tkinter.html">Tkinter</a>
     ```
-    Pip install tkinter
+    pip install tkinter
     ```
 - <a target="_blank" href="https://docs.python.org/3/library/tkinter.html">Pygame</a>
     ```
-    Pip install pygame
+    pip install pygame
     ```
 - <a target="_blank" href="https://pypi.org/project/stagger/">Stagger</a>
     ```
-    Pip install stagger
+    pip install stagger
     ```
 - <a target="_blank" href="https://pillow.readthedocs.io/en/stable/">Pillow</a>
     ```
-    Pip install pillow
+    pip install pillow
     ```
 Note: If there are any other types of package installation needed install then them also.
 
@@ -31,7 +31,7 @@ Note: If there are any other types of package installation needed install then t
 - In command line
 
     ```
-    Python Music_player.py
+    python Music_player.py
     ```
 ### 3. Demonstration
 
