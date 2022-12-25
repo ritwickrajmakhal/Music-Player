@@ -4,14 +4,19 @@ from time import sleep
 import tkinter as tk
 from tkinter import messagebox
 import stagger
+from MenuBar import MenuBar
+# from SongsView import SongsView
 from modules import *
 from pygame import mixer
 from PIL import Image, ImageTk
 mixer.init()
 # --------------- Global variables ---------------------
 volume = 0.5
+songs = list()
 # --------------- Function definitions -----------------
-def changePath(e):
+
+
+def changePath():
     """Changes the folder path in which all the mp3 files are present.
 
     Args:
@@ -22,7 +27,7 @@ def changePath(e):
     setPos(0.0)
     path = setPath()
     songs = find_songs(path)
-    loadSong(songs[songIndex])
+    loadSong(songs[askForSongIndexFile()])
     play_pauseBtn.config(text="Play")
 
 
@@ -44,6 +49,7 @@ def changeVolume(event):
     sleep(0.5)
     root.title("Music Player")
 
+
 def loadSong(path):
     """Loads a mp3 files present in the path and displays meta data
     into the GUI
@@ -51,7 +57,6 @@ def loadSong(path):
     Args:
         path (Str): exact path of a mp3 file
     """
-    global songIndex
     try:
         audio = stagger.read_tag(path)
         name.config(text=audio.title)
@@ -76,19 +81,18 @@ def loadSong(path):
     except:
         messagebox.showerror(
             "Invalid file", icon='error')
-        songIndex = (songIndex + 1) % len(songs)
-        loadSong(songs[songIndex])
+        setSongIndex((askForSongIndexFile() + 1) % len(songs))
+        loadSong(songs[askForSongIndexFile()])
     mixer.music.pause()
 
 
 def prevSong():
     """Plays the previous song
     """
-    global songIndex
     global pos
-    songIndex = (songIndex - 1 + len(songs)) % len(songs)
+    setSongIndex((askForSongIndexFile() - 1 + len(songs)) % len(songs))
     pos = 0.0
-    loadSong(songs[songIndex])
+    loadSong(songs[askForSongIndexFile()])
     play_pauseBtn.config(text="Pause")
     mixer.music.play()
 
@@ -96,11 +100,10 @@ def prevSong():
 def nextSong():
     """Plays the next song
     """
-    global songIndex
     global pos
-    songIndex = (songIndex + 1) % len(songs)
+    setSongIndex((askForSongIndexFile() + 1) % len(songs))
     pos = 0.0
-    loadSong(songs[songIndex])
+    loadSong(songs[askForSongIndexFile()])
     play_pauseBtn.config(text="Pause")
     mixer.music.play()
 
@@ -120,19 +123,12 @@ def play_Pause():
 root = tk.Tk()
 root.title("Music Player")
 root.geometry("800x410")
-root.maxsize(800, 410)
-root.minsize(800, 410)
+# root.maxsize(800, 410)
+# root.minsize(800, 410)
 # ------------------------ Design statements for menu bar ------------------
-menuBar = tk.Frame(root, bg="black")
-menuBar.pack(side=tk.TOP, fill=tk.X)
-
-btn1 = tk.Button(menuBar, text="Songs", width=10)
-btn1.pack(side=tk.LEFT, fill=tk.Y)
-btn2 = tk.Button(menuBar, text="Player", width=10)
-btn2.pack(side=tk.LEFT, fill=tk.Y)
-
 f0 = tk.Frame(root)
 f0.pack(fill=tk.X, side=tk.LEFT)
+
 
 f1 = tk.Frame(f0, bg="black")
 f1.pack(side=tk.LEFT, fill=tk.Y)
@@ -165,15 +161,13 @@ play_pauseBtn.pack(side=tk.LEFT, padx=30)
 tk.Button(f2, text=">>", padx=20, pady=10,
           command=nextSong).pack(side=tk.LEFT, padx=30)
 
-
-root.bind('<MouseWheel>', changeVolume)
 # ---------------------- Entry Point ------------------
 path = askForPath()
 songs = find_songs(path)
 isContainsAudioFile(songs)
-songIndex = askForSongIndexFile()
 pos = askForPos()
-loadSong(songs[songIndex])
+loadSong(songs[askForSongIndexFile()])
 
+MenuBar(root, f0, changePath, songs,nextSong)
 root.mainloop()
-storePos(root, pos, songIndex)
+storePos(root, pos, askForSongIndexFile())

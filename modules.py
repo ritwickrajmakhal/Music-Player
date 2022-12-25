@@ -35,8 +35,7 @@ def find_songs(path):
     except:
         messagebox.showerror(
             "Try to Restart me", "Please give me valid folder :(", icon='error')
-        with open('resources\pathFile.txt', 'w') as pathFile:
-            pathFile.write('')
+        os.remove('resources\pathFile.txt')
         exit(-1)
     return list_of_song
 
@@ -63,7 +62,6 @@ def setPath():
         pathFile.write(path)
     with open("resources\songIndexFile.txt", 'w') as songIndexFile:
         songIndexFile.write("0")
-        sleep(1)
     return path
 
 
