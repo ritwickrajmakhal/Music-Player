@@ -6,7 +6,6 @@ import os
 from modules import *
 from pygame import mixer
 mixer.init()
-
 # -------------------------- Function definitions -------------------
 def setSongIndex(songIndex):
     """Stores index of currently playing audio file.
@@ -32,6 +31,10 @@ def find_songs(path):
         for file in os.listdir(path):
             if file.endswith(".mp3") or file.endswith(".wav"):
                 list_of_song.append(path+"\\"+file)
+        if len(list_of_song)==0:
+            messagebox.showerror(
+            "Try to Restart me", "Make sure your folder has at least one audio file", icon="error")
+            exit(-1)
     except:
         messagebox.showerror(
             "Try to Restart me", "Please give me valid folder :(", icon='error')
@@ -63,22 +66,6 @@ def setPath():
     with open("resources\songIndexFile.txt", 'w') as songIndexFile:
         songIndexFile.write("0")
     return path
-
-
-def isContainsAudioFile(songs):
-    """songs (list): This function check whether a list contains at least one
-        file or not. If it is empty then it will show a popup with an error message
-
-    Args:
-        songs (list): list of songs
-    """
-    if len(songs) == 0:
-        messagebox.showerror(
-            "Try to Restart me", "Make sure your folder has at least one audio file", icon="error")
-        with open('resources\pathFile.txt', 'w') as pathFile:
-            pathFile.write('')
-        exit(-1)
-
 
 def askForPath():
     """This function tries to open the pathFile.txt if fails then again it will call

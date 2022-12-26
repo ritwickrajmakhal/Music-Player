@@ -5,7 +5,6 @@ import tkinter as tk
 from tkinter import messagebox
 import stagger
 from MenuBar import MenuBar
-# from SongsView import SongsView
 from modules import *
 from pygame import mixer
 from PIL import Image, ImageTk
@@ -26,10 +25,11 @@ def changePath():
     pos = 0.0
     setPos(0.0)
     path = setPath()
+    setSongIndex(0)
     songs = find_songs(path)
     loadSong(songs[askForSongIndexFile()])
     play_pauseBtn.config(text="Play")
-
+    
 
 def changeVolume(event):
     """Increases volume when mouse wheel scrolls in forward direction and
@@ -122,12 +122,12 @@ def play_Pause():
 # ------------------- Design statements -------------------
 root = tk.Tk()
 root.title("Music Player")
-root.geometry("800x410")
-# root.maxsize(800, 410)
-# root.minsize(800, 410)
+root.geometry("800x430")
+root.maxsize(800, 430)
+root.minsize(800, 430)
 # ------------------------ Design statements for menu bar ------------------
 f0 = tk.Frame(root)
-f0.pack(fill=tk.X, side=tk.LEFT)
+f0.pack(fill=tk.X)
 
 
 f1 = tk.Frame(f0, bg="black")
@@ -137,11 +137,11 @@ photo = ImageTk.PhotoImage(Image.open(
     "resources\images\defaultImage.jpg").resize((400, 400)))
 img = tk.Label(f1, image=photo)
 img.pack(fill=tk.X)
-img.bind("<Button>", changePath)
+img.bind('<MouseWheel>',changeVolume)
 
 f2 = tk.Frame(f0, bg="black")
-f2.pack(side=tk.RIGHT, fill=tk.Y)
-
+f2.pack(side=tk.LEFT, fill=tk.Y)
+f2.bind('<MouseWheel>',changeVolume)
 name = tk.Label(f2, bg="black", fg="white", font=("Bahnschrift Condensed", 12))
 name.pack(side=tk.TOP, pady=40, fill=tk.X)
 album = tk.Label(f2, bg="black", fg="white",
@@ -160,14 +160,22 @@ play_pauseBtn.pack(side=tk.LEFT, padx=30)
 
 tk.Button(f2, text=">>", padx=20, pady=10,
           command=nextSong).pack(side=tk.LEFT, padx=30)
-
+statusBar = tk.Label(root, text="Made with 💟 by Ritwick",
+                     relief=tk.SUNKEN, font=("Bahnschrift Condensed", 12))
+statusBar.pack(side=tk.BOTTOM, fill=tk.X)
 # ---------------------- Entry Point ------------------
 path = askForPath()
 songs = find_songs(path)
-isContainsAudioFile(songs)
 pos = askForPos()
-loadSong(songs[askForSongIndexFile()])
-
-MenuBar(root, f0, changePath, songs,nextSong)
+try:
+    loadSong(songs[askForSongIndexFile()])
+except:
+    messagebox.showerror(
+            "Try to Restart me", "Somthing went wrong", icon="error")
+    os.remove('resources\pathFile.txt')
+    os.remove('resources\posFile.txt')
+    os.remove('resources\songIndexFile.txt')
+    exit(-1)
+MenuBar(root, f0, changePath, songs, nextSong)
 root.mainloop()
 storePos(root, pos, askForSongIndexFile())
