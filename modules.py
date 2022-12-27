@@ -95,6 +95,31 @@ def askForSongIndexFile():
         setSongIndex(0)
     return songIndex
 
+def setThemeFile(theme):
+    """opens resources\\themeFile.txt in write mode and stores the theme of
+    the music player.
+
+    Returns:
+        Str: theme (black/white)
+    """
+    with open("resources\\themeFile.txt", "w") as themeFile:
+        themeFile.write(theme)
+    
+
+def askForThemeFile():
+    """This function tries to open the themeFile.txt if fails then again it will call
+        the setThemeFile method with default argument
+
+    Returns:
+        Str: theme (black/white)
+    """
+    try:
+        with open("resources\\themeFile.txt") as themeFile:
+            theme = themeFile.read()
+    except:
+        setThemeFile("white")
+        theme = askForThemeFile()
+    return theme
 
 def askForPos():
     """This function tries to open the posFile.txt if fails then it will call

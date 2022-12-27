@@ -3,13 +3,13 @@ import tkinter as tk
 import stagger
 import modules
 # --------------- Function definitions -----------------
-def SongsView(root, songs, nextSong):
+def SongsView(root, songs, nextSong, theme):
     f0 = tk.Frame(root)
     scrollBar = tk.Scrollbar(f0)
     scrollBar.pack(fill=tk.Y, side=tk.RIGHT)
 
     list_of_songs = tk.Listbox(f0, activestyle=tk.NONE, width=135, height=21, font=(
-        "Lucida Sans Typewriter", 12), bd=0, bg="black", fg="white", yscrollcommand=scrollBar.set)
+        "Lucida Sans Typewriter", 12), bd=0, bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}", yscrollcommand=scrollBar.set)
     scrollBar.config(command=list_of_songs.yview)
 
     def playSelected(event):

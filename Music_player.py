@@ -12,6 +12,7 @@ mixer.init()
 # --------------- Global variables ---------------------
 volume = 0.5
 songs = list()
+theme = askForThemeFile()
 # --------------- Function definitions -----------------
 
 
@@ -130,36 +131,36 @@ f0 = tk.Frame(root)
 f0.pack(fill=tk.X)
 
 
-f1 = tk.Frame(f0, bg="black")
-f1.pack(side=tk.LEFT, fill=tk.Y)
+f1 = tk.Frame(f0, bg=f"{theme}")
+f1.pack(side=tk.LEFT, fill=tk.BOTH)
 
 photo = ImageTk.PhotoImage(Image.open(
     "resources\images\defaultImage.jpg").resize((400, 400)))
 img = tk.Label(f1, image=photo)
-img.pack(fill=tk.X)
+img.pack(fill=tk.BOTH)
 img.bind('<MouseWheel>',changeVolume)
 
-f2 = tk.Frame(f0, bg="black")
-f2.pack(side=tk.LEFT, fill=tk.Y)
+f2 = tk.Frame(f0, bg=f"{theme}")
+f2.pack(side=tk.LEFT, fill=tk.BOTH)
 f2.bind('<MouseWheel>',changeVolume)
-name = tk.Label(f2, bg="black", fg="white", font=("Bahnschrift Condensed", 12))
+name = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}", font=("Bahnschrift Condensed", 12))
 name.pack(side=tk.TOP, pady=40, fill=tk.X)
-album = tk.Label(f2, bg="black", fg="white",
+album = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}",
                  font=("Bahnschrift Condensed", 12))
 album.pack(side=tk.TOP, pady=40, fill=tk.X)
-artist = tk.Label(f2, bg="black", fg="white",
+artist = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}",
                   font=("Bahnschrift Condensed", 12))
 artist.pack(side=tk.TOP, pady=40, fill=tk.X)
 
 tk.Button(f2, text="<<", padx=20, pady=10,
-          command=prevSong).pack(side=tk.LEFT, padx=30)
+          command=prevSong,bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}").pack(side=tk.LEFT, padx=30)
 
 play_pauseBtn = tk.Button(f2, text="Play", padx=20,
-                          pady=10, command=play_Pause)
+                          pady=10, command=play_Pause,bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}")
 play_pauseBtn.pack(side=tk.LEFT, padx=30)
 
 tk.Button(f2, text=">>", padx=20, pady=10,
-          command=nextSong).pack(side=tk.LEFT, padx=30)
+          command=nextSong,bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}").pack(side=tk.LEFT, padx=30)
 statusBar = tk.Label(root, text="Made with 💟 by Ritwick",
                      relief=tk.SUNKEN, font=("Bahnschrift Condensed", 12))
 statusBar.pack(side=tk.BOTTOM, fill=tk.X)
@@ -176,6 +177,6 @@ except:
     os.remove('resources\posFile.txt')
     os.remove('resources\songIndexFile.txt')
     exit(-1)
-MenuBar(root, f0, changePath, songs, nextSong)
+MenuBar(root, f0, changePath, songs, nextSong, theme)
 root.mainloop()
 storePos(root, pos, askForSongIndexFile())
