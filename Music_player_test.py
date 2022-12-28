@@ -12,7 +12,7 @@ class TestModulesMethods(unittest.TestCase):
 
     def test_setPath(self):
         expected_path = modules.setPath()
+        
         self.assertEqual(modules.askForPath(),expected_path)  
-    
 if __name__ == '__main__':
     unittest.main()
