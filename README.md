@@ -1,56 +1,46 @@
 # Music Player - Python
 
-A `Music Player` application that allows you to listen to musics that stored in the computer's internal or external memory..
+A `Music Player` application that allows you to listen to music stored on your computer's internal or external memory.
 
-![Table Image](demo-related-assests/sc1.png)
+![Music Player Interface](demo-related-assests/sc1.png)
 
-## Demo - How you can use my Music Player?
+## Demo - Using My Music Player
 
-### 1. Install all the dependencies:
-- <a target="_blank" href="https://www.python.org/ftp/python/3.11.1/python-3.11.1-amd64.exe">Install Python</a>
+### 1. Install Dependencies
+- First, ensure you have Python installed. You can download it [here](https://www.python.org/ftp/python/3.11.1/python-3.11.1-amd64.exe).
 
-- <a target="_blank" href="https://docs.python.org/3/library/tkinter.html">Tkinter</a>
-    ```
-    pip install tkinter
-    ```
-- <a target="_blank" href="https://docs.python.org/3/library/tkinter.html">Pygame</a>
-    ```
-    pip install pygame
-    ```
-- <a target="_blank" href="https://pypi.org/project/stagger/">Stagger</a>
-    ```
-    pip install stagger
-    ```
-- <a target="_blank" href="https://pillow.readthedocs.io/en/stable/">Pillow</a>
-    ```
-    pip install pillow
-    ```
-Note: If there are any other types of package installation needed install then them also.
+- Then, install the required dependencies:
 
-### 2. Run `Music_player.py` file
-- In command line
+    ```
+    pip install -r requirements.txt
+    ```
+
+### 2. Run the `Music_player.py` File
+- Open your command line and run:
 
     ```
     python Music_player.py
     ```
+
 ### 3. Demonstration
 
-- After successfully running this application, you will see look this:
-![Screenshot](demo-related-assests/sc1.gif)
+- Upon successful launch, the application will look like this:
+![Initial Screen](demo-related-assests/sc1.gif)
 
-- Don't skip the pop up, it will appear only for the first time user. In this pop up you will need to choose a folder which contains at least one `.mp3` or `.wav` file.
+- A pop-up will appear for first-time users to choose a folder containing at least one `.mp3` or `.wav` file. Don't skip this step.
 
+![Folder Selection](demo-related-assests/sc2.gif)
 
-![Screenshot](demo-related-assests/sc2.gif)
+- Once the folder is selected, you can access the music player interface. Here, you can `play`, `pause`, and change tracks using the <button>>></button> and <button><<</button> buttons.
 
-- Now you can go your music player. And you can `play` or `pause` and change the song by clicking <button>>></button> or <button><<</button> button.
+![Music Player Interface](demo-related-assests/sc3.gif)
 
-![Screenshot](demo-related-assests/sc3.gif)
+- To change the music folder, click on the image (this is a hidden setting).
 
-- Also, you can change the music folder by clicking on the image (Hidden setting), if you want
+![Change Music Folder](demo-related-assests/sc4.gif)
 
-![Screenshot](demo-related-assests/sc4.gif)
+- Adjust the volume by scrolling the mouse wheel: scroll forward to `increase` volume, and scroll backward to `decrease` volume.
 
--  You can `increase` the volume by scrolling of mouse wheel in `forward` or `decrease` the volume by scrolling of mouse wheel in `backward` direction respectively.
+![Volume Control](demo-related-assests/sc5.gif)
 
-![Screenshot](demo-related-assests/sc5.gif)
+Enjoy your music!
