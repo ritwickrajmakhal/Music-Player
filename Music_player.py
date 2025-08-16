@@ -1,4 +1,5 @@
 # ---------------------- Included packages -------------
+import pygame
 import io
 from time import sleep
 import tkinter as tk
@@ -9,6 +10,7 @@ from modules import *
 from pygame import mixer
 from PIL import Image, ImageTk
 mixer.init()
+pygame.init()
 # --------------- Global variables ---------------------
 volume = 0.5
 songs = list()
@@ -30,7 +32,7 @@ def changePath():
     songs = find_songs(path)
     loadSong(songs[askForSongIndexFile()])
     play_pauseBtn.config(text="Play")
-    
+
 
 def changeVolume(event):
     """Increases volume when mouse wheel scrolls in forward direction and
@@ -112,12 +114,19 @@ def nextSong():
 def play_Pause():
     """Play and pause toggler
     """
-    if(mixer.music.get_busy()):
+    if (mixer.music.get_busy()):
         mixer.music.pause()
         play_pauseBtn.config(text="Play")
     else:
         play_pauseBtn.config(text="Pause")
         mixer.music.unpause()
+
+
+# Function to check if song has ended and play next
+def check_music_end():
+    if not mixer.music.get_busy() and play_pauseBtn.cget("text") == "Pause":
+        nextSong()
+    root.after(1000, check_music_end)  # Check every second
 
 
 # ------------------- Design statements -------------------
@@ -138,12 +147,13 @@ photo = ImageTk.PhotoImage(Image.open(
     "resources\images\defaultImage.jpg").resize((400, 400)))
 img = tk.Label(f1, image=photo)
 img.pack(fill=tk.BOTH)
-img.bind('<MouseWheel>',changeVolume)
+img.bind('<MouseWheel>', changeVolume)
 
 f2 = tk.Frame(f0, bg=f"{theme}")
 f2.pack(side=tk.LEFT, fill=tk.BOTH)
-f2.bind('<MouseWheel>',changeVolume)
-name = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}", font=("Bahnschrift Condensed", 12))
+f2.bind('<MouseWheel>', changeVolume)
+name = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}", font=(
+    "Bahnschrift Condensed", 12))
 name.pack(side=tk.TOP, pady=40, fill=tk.X)
 album = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}",
                  font=("Bahnschrift Condensed", 12))
@@ -153,14 +163,14 @@ artist = tk.Label(f2, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'bla
 artist.pack(side=tk.TOP, pady=40, fill=tk.X)
 
 tk.Button(f2, text="<<", padx=20, pady=10,
-          command=prevSong,bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}").pack(side=tk.LEFT, padx=30)
+          command=prevSong, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}").pack(side=tk.LEFT, padx=30)
 
 play_pauseBtn = tk.Button(f2, text="Play", padx=20,
-                          pady=10, command=play_Pause,bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}")
+                          pady=10, command=play_Pause, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}")
 play_pauseBtn.pack(side=tk.LEFT, padx=30)
 
 tk.Button(f2, text=">>", padx=20, pady=10,
-          command=nextSong,bg=f"{theme}",fg=f"{'white' if theme == 'black' else 'black'}").pack(side=tk.LEFT, padx=30)
+          command=nextSong, bg=f"{theme}", fg=f"{'white' if theme == 'black' else 'black'}").pack(side=tk.LEFT, padx=30)
 statusBar = tk.Label(root, text="Made with 💟 by Ritwick",
                      relief=tk.SUNKEN, font=("Bahnschrift Condensed", 12))
 statusBar.pack(side=tk.BOTTOM, fill=tk.X)
@@ -172,11 +182,12 @@ try:
     loadSong(songs[askForSongIndexFile()])
 except:
     messagebox.showerror(
-            "Try to Restart me", "Somthing went wrong", icon="error")
+        "Try to Restart me", "Somthing went wrong", icon="error")
     os.remove('resources\pathFile.txt')
     os.remove('resources\posFile.txt')
     os.remove('resources\songIndexFile.txt')
     exit(-1)
 MenuBar(root, f0, changePath, songs, nextSong, theme)
+check_music_end()  # Start checking for song end
 root.mainloop()
 storePos(root, pos, askForSongIndexFile())
