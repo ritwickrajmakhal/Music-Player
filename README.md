@@ -8,12 +8,62 @@ A `Music Player` application that allows you to listen to music stored on your c
 
 ### 1. Install Dependencies
 - First, ensure you have Python installed. You can download it [here](https://www.python.org/ftp/python/3.11.1/python-3.11.1-amd64.exe).
+- This project supports and has been tested with Python 3.8 only. Please install Python 3.8 (for example, the Windows installer) or make sure your virtual environment uses Python 3.8.
+
+    - Windows: use the 3.8 installer from the official site or the py launcher to target 3.8 (e.g. `py -3.8 -m venv .venv`).
+    - macOS / Linux: install a Python 3.8 interpreter (for example with pyenv) and create the virtual environment with that interpreter.
+
+    You can still use a later or earlier interpreter at your own risk, but the application will explicitly require Python 3.8 when started.
 
 - Then, install the required dependencies:
 
-    ```
+Create and activate a virtual environment (recommended)
+
+It's a good practice to use an isolated virtual environment for the project. Below are example commands for the most common shells/OS.
+
+- Windows (PowerShell - recommended):
+
+    ```powershell
+    python -m venv .venv
+    # Allow running scripts once if needed (PowerShell may block scripts):
+    # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    .\.venv\Scripts\Activate.ps1
+    python -m pip install --upgrade pip
     pip install -r requirements.txt
     ```
+
+- Windows (Command Prompt):
+
+    ```cmd
+    python -m venv .venv
+    .\.venv\Scripts\activate.bat
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+    ```
+
+- macOS / Linux (bash, zsh, fish):
+
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install --upgrade pip
+    pip install -r requirements.txt
+    ```
+
+To deactivate the environment when you're done:
+
+```bash
+deactivate
+```
+
+If you prefer other tools you can use `virtualenv`, `pipx`, `pipenv`, or `poetry` instead; the same idea applies: create an isolated environment and install `requirements.txt` there.
+
+Then, run the application:
+
+```powershell
+python Music_player.py
+```
+
 
 ### 2. Run the `Music_player.py` File
 - Open your command line and run:

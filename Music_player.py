@@ -1,3 +1,16 @@
+#!/usr/bin/env python
+# ---------------------- Python version guard -------------
+import sys
+
+# Enforce Python 3.8 only
+if not (sys.version_info.major == 3 and sys.version_info.minor == 8):
+    sys.stderr.write(
+        "Music Player requires Python 3.8. Detected: {}.{}.{}\n".format(
+            sys.version_info.major, sys.version_info.minor, sys.version_info.micro
+        )
+    )
+    sys.exit(1)
+
 # ---------------------- Included packages -------------
 import pygame
 import io
